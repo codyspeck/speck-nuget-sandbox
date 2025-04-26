@@ -8,14 +8,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-      - name: Package
-        run: dotnet pack -p:Version=${{ github.ref_name }}
-      - name: Publish
-        run: |
-          dotnet nuget push ./src/Speck.NugetSandbox/bin/Release/*.nupkg \
-          --api-key ${{ secrets.NUGET_API_KEY }} \
-          --source https://api.nuget.org/v3/index.json
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Version
+        id: version
+        uses: codacy/git-version@2.8.0
+      - name: Print
+        run: echo ${{ steps.version.outputs.version }}
+      
+#      - uses: actions/setup-dotnet@v4
+#        with:
+#          dotnet-version: 9.0.x
+#      - name: Package
+#        run: dotnet pack -p:Version=${{ github.ref_name }}
+#      - name: Publish
+#        run: |
+#          dotnet nuget push ./src/Speck.NugetSandbox/bin/Release/*.nupkg \
+#          --api-key ${{ secrets.NUGET_API_KEY }} \
+#          --source https://api.nuget.org/v3/index.json
