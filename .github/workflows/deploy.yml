@@ -13,7 +13,7 @@ jobs:
         with:
           dotnet-version: 9.0.x
       - name: Package
-        run: dotnet pack
+        run: dotnet pack -p:Version=${{ github.ref }}
       - name: Publish
         run: |
           dotnet nuget push ./src/Speck.NugetSandbox/bin/Release/*.nupkg \
